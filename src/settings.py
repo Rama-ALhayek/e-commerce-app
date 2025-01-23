@@ -27,9 +27,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
+    'store',
     'crispy_forms',
     'crispy_bootstrap4',
-   # 'crispy-bootstrap4',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -67,10 +67,16 @@ WSGI_APPLICATION = 'src.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DATABASE_NAME'),
+        'USER': config('DATABASE_USER'),
+        'PASSWORD': config('DATABASE_PASSWORD'),
+        'HOST': config('DATABASE_HOST'),
+        'PORT': config('DATABASE_PORT', default=5432),
     }
 }
 
@@ -112,6 +118,13 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = 'static'
 STATICFILES_DIRS =[ os.path.join(BASE_DIR,'src/static')]
+
+
+
+
+# Media files settings
+MEDIA_URL = '/media/'  # URL for accessing media files in development
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Folder where media files will be stored
 
 
 # Default primary key field type
