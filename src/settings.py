@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'store',
     'crispy_forms',
     'crispy_bootstrap4',
+    'django.contrib.postgres',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
