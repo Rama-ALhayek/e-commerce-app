@@ -19,9 +19,9 @@
         <form class="search_form" method="get" action="{% url 'store:product_search' %}">
           <input type="text" name="query" class="form-control" placeholder="Search here...">
           <button class="" type="submit">
-              <i class="fa fa-search" aria-hidden="true"></i>
+            <i class="fa fa-search" aria-hidden="true"></i>
           </button>
-      </form>
+        </form>
         <div class="user_option_box">
           <a href="" class="account-link">
             <i class="fa fa-user" aria-hidden="true"></i>
@@ -29,10 +29,22 @@
               My Account
             </span>
           </a>
-          <a href="" class="cart-link">
+          <a href="{% url 'cart:cart_details' %}" class="cart-link">
             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
             <span>
               Cart
+            </span>
+            <span> {% with total_items=cart|length %}
+
+              {% if total_items > 0 %}
+              <small><a href=" {% url 'cart:cart_details' %}"> {{total_items}} items ,
+                  {{cart.get_total_price}} $
+                </a> </small>
+              {% else %}
+              <small> Your Cart is Empty</small>
+              {% endif %}
+              {% endwith %}
+
             </span>
           </a>
         </div>

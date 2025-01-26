@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Product,Category
 from django.contrib.postgres.search import SearchVector,SearchQuery,SearchRank
+from cart.forms import CartAddProductForm
+
 
 def product_list(request, category_slug=None):
     products=Product.objects.filter(status='AV')
@@ -24,18 +26,15 @@ def product_list(request, category_slug=None):
 
 def product_details(request, product_slug):
     product = get_object_or_404(Product, slug=product_slug,status='AV' )
-    context = {
-        'detail': product,
-    }
+    cart_product_form= CartAddProductForm()
+    context = {'detail': product,
+               'cart_product_form':cart_product_form,
+               }
     
     return render(request, 'store/product_details.html', context)
 
 
 def product_search(request):
-    """
-    Search for products based on a query string.
-    Uses PostgreSQL full-text search to match the name and description fields.
-    """
     query = None
     results = []
 

@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'store',
+    'cart',
     'crispy_forms',
     'crispy_bootstrap4',
     'django.contrib.postgres',
@@ -57,6 +58,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processours.cart'
             ],
         },
     },
@@ -147,3 +149,6 @@ from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
     messages.ERROR: "danger",
 }
+
+
+CART_SESSION_ID = 'cart'
