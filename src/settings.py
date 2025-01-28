@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'accounts',
     'store',
     'cart',
+    'orders',
     'crispy_forms',
     'crispy_bootstrap4',
     'django.contrib.postgres',
@@ -142,6 +143,7 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = config('EMAIL_PORT')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS',cast=bool)
+DEFAULT_FROM_EMAIL = ('DEFAULT_FROM_EMAIL')
 
 
 from django.contrib.messages import constants as messages
@@ -152,3 +154,13 @@ MESSAGE_TAGS = {
 
 
 CART_SESSION_ID = 'cart'
+
+CACHES = {
+"default": {
+"BACKEND": "django_redis.cache.RedisCache",
+"LOCATION": "redis://127.0.0.1:6379/1",
+"OPTIONS": {
+"CLIENT_CLASS": "django_redis.client.DefaultClient",
+}
+}
+}
