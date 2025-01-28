@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'store',
     'cart',
     'orders',
+    'coupons',
     'crispy_forms',
     'crispy_bootstrap4',
     'django.contrib.postgres',
