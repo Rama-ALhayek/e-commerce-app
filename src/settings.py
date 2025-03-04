@@ -27,9 +27,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
+    'store',
+    'cart',
+    'orders',
+    'coupons',
     'crispy_forms',
     'crispy_bootstrap4',
-   # 'crispy-bootstrap4',
+    'django.contrib.postgres',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -56,6 +60,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processours.cart'
             ],
         },
     },
@@ -67,10 +72,16 @@ WSGI_APPLICATION = 'src.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DATABASE_NAME'),
+        'USER': config('DATABASE_USER'),
+        'PASSWORD': config('DATABASE_PASSWORD'),
+        'HOST': config('DATABASE_HOST'),
+        'PORT': config('DATABASE_PORT', default=5432),
     }
 }
 
@@ -114,6 +125,13 @@ STATIC_ROOT = 'static'
 STATICFILES_DIRS =[ os.path.join(BASE_DIR,'src/static')]
 
 
+
+
+# Media files settings
+MEDIA_URL = '/media/'  # URL for accessing media files in development
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Folder where media files will be stored
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -126,10 +144,24 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = config('EMAIL_PORT')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS',cast=bool)
+DEFAULT_FROM_EMAIL = ('DEFAULT_FROM_EMAIL')
 
 
 from django.contrib.messages import constants as messages
 
 MESSAGE_TAGS = {
     messages.ERROR: "danger",
+}
+
+
+CART_SESSION_ID = 'cart'
+
+CACHES = {
+"default": {
+"BACKEND": "django_redis.cache.RedisCache",
+"LOCATION": "redis://127.0.0.1:6379/1",
+"OPTIONS": {
+"CLIENT_CLASS": "django_redis.client.DefaultClient",
+}
+}
 }

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if query %}
+    <h1> Search with '{{ query }}'</h1>
+    <br>
+    {% with results.count as total_results %}
+        <p>Found {{ total_results }}</p>
+    {% endwith %}
+{% endif %}
+
+{% for product in results %}
+    <h4>
+        <a href="{% url 'store:product_details' product.slug %}">
+            {{ product.name }}
+        </a>
+    </h4>
+{% empty %}
+    <p> There are no results for your '{{ query }}'</p>
+{% endfor %}
+
+{% endblock %}
