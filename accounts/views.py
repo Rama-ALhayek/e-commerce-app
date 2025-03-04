@@ -4,7 +4,7 @@ from django.urls import reverse
 from .forms import RegisterForm
 from .models import Account
 from django.contrib import messages
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login,logout as auth_logout
 from django.conf import settings
 from django.core.mail import EmailMessage
 from django.contrib.sites.shortcuts import get_current_site
@@ -12,6 +12,7 @@ from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.decorators import login_required 
 
 
 def user_signUp(request):
@@ -94,3 +95,21 @@ def activate(request, uidb64, token):
     else:
         messages.error(request, 'Invalid activation link or the link has expired.')
         return redirect('accounts:sign_up')
+
+
+@login_required(login_url='accounts:login')
+def logout(request):
+    if request.method == 'POST':
+        auth_logout(request)
+        messages.success(request, 'You are logged out now.')
+        return redirect('accounts:login')
+    return render(request, 'accounts/logout.html')
+
+
+
+
+
+
+
+
+
